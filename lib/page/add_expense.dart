@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:monement/database/hive_configuration.dart';
 import 'package:monement/model/expense/expense_item.dart';
 import 'package:monement/model/expense/expense_types.dart';
+import 'package:monement/utils/date.dart';
 import 'package:monement/utils/extensions.dart';
 
 class AddExpense extends StatefulWidget {
@@ -48,7 +49,7 @@ class _AddExpenseState extends State<AddExpense> {
 
   @override
   void initState() {
-    _dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    _dateController.text = DateFormat(dateFormat).format(DateTime.now());
     super.initState();
   }
 
@@ -161,19 +162,13 @@ class _AddExpenseState extends State<AddExpense> {
                           ],
                         ),
                         onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2101),
-                          );
+                          DateTime? pickedDate =
+                              await getTimeFromDatePicker(context);
                           if (pickedDate != null) {
-                            setState(
-                              () {
-                                _dateController.text =
-                                    DateFormat('yyyy-MM-dd').format(pickedDate);
-                              },
-                            );
+                            setState(() {
+                              _dateController.text =
+                                  DateFormat(dateFormat).format(pickedDate);
+                            });
                           }
                         },
                       )

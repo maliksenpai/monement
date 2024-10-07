@@ -22,7 +22,6 @@ class _PageTabState extends State<PageTab> {
 
   @override
   Widget build(BuildContext context) {
-    print(selectedTabItem.label);
     return Scaffold(
       body: SafeArea(
         child: switch (selectedTabItem.id) {

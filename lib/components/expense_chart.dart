@@ -1,7 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:monement/database/hive_configuration.dart';
+import 'package:get/get.dart';
+import 'package:monement/controller/expenses_controller.dart';
+import 'package:monement/model/expense/expense_item.dart';
 import 'package:monement/utils/colors.dart';
 
 class ExpenseChart extends StatefulWidget {
@@ -12,22 +13,33 @@ class ExpenseChart extends StatefulWidget {
 }
 
 class _ExpenseChartState extends State<ExpenseChart> {
-  Box box = Hive.box(expensesBox);
+  final ExpensesController expensesController = Get.put(ExpensesController());
+  late List<ExpenseItem> items = expensesController.getCurrentExpenseItem();
 
   @override
   Widget build(BuildContext context) {
+    if (items.isEmpty) {
+      return const Center(
+        child: Text(
+          "There is no expenses in current month",
+          style: TextStyle(fontSize: 24),
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
     return PieChart(PieChartData(
       borderData: FlBorderData(
         show: true,
       ),
       sectionsSpace: 0,
       centerSpaceRadius: 40,
-      sections: box.values.map((item) {
+      sections: expensesController.getCurrentExpenseItem().map((item) {
         return PieChartSectionData(
           title: item.name,
           value: item.amount,
           color: generateRandomColor(),
-          titlePositionPercentageOffset: 1.25
+          titlePositionPercentageOffset: 1.25,
         );
       }).toList(),
     ));
