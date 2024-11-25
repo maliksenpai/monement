@@ -34,7 +34,15 @@ class _ExpensesState extends State<Expenses> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              final DateTime? picked = await showDatePicker(
+                context: context,
+                initialDate: expensesController.currentDateTime.value,
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2025),
+              );
+              // todo: implementation for changing month
+            },
             icon: const Icon(
               Icons.calendar_today,
             ),
@@ -45,12 +53,12 @@ class _ExpensesState extends State<Expenses> {
         () {
           return Column(
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 3,
-                child: const ExpenseChart(),
+              const Expanded(
+                flex: 1,
+                child: ExpenseChart(),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 2,
+              Expanded(
+                flex: 2,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
