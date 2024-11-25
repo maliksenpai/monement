@@ -15,13 +15,14 @@ class Expenses extends StatefulWidget {
 
 class _ExpensesState extends State<Expenses> {
   final ExpensesController expensesController = Get.put(ExpensesController());
-  late List<ExpenseItem> expenseItems =
+  late RxList<ExpenseItem> expenseItems =
       expensesController.getCurrentExpenseItem();
 
   @override
   void initState() {
-    expenseItems.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     super.initState();
+    expenseItems.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    expenseItems.refresh();
   }
 
   @override

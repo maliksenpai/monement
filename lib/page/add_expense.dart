@@ -32,7 +32,7 @@ class _AddExpenseState extends State<AddExpense> {
         ExpenseItem(
           amount: double.parse(_amountController.text),
           category: _expenseCategory,
-          dateTime: DateTime.parse(_dateController.text),
+          dateTime: DateFormat(DATE_FORMAT).parse(_dateController.text),
           description: _descriptionController.text,
           name: _nameController.text,
         ),
@@ -49,7 +49,7 @@ class _AddExpenseState extends State<AddExpense> {
 
   @override
   void initState() {
-    _dateController.text = DateFormat(dateFormat).format(DateTime.now());
+    _dateController.text = DateFormat(DATE_FORMAT).format(DateTime.now());
     super.initState();
   }
 
@@ -167,7 +167,7 @@ class _AddExpenseState extends State<AddExpense> {
                           if (pickedDate != null) {
                             setState(() {
                               _dateController.text =
-                                  DateFormat(dateFormat).format(pickedDate);
+                                  DateFormat(DATE_FORMAT).format(pickedDate);
                             });
                           }
                         },

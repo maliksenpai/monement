@@ -14,10 +14,11 @@ class ExpenseChart extends StatefulWidget {
 
 class _ExpenseChartState extends State<ExpenseChart> {
   final ExpensesController expensesController = Get.put(ExpensesController());
-  late List<ExpenseItem> items = expensesController.getCurrentExpenseItem();
+  RxList<ExpenseItem> items = RxList<ExpenseItem>();
 
   @override
   Widget build(BuildContext context) {
+    items.assignAll(expensesController.getCurrentExpenseItem());
     if (items.isEmpty) {
       return const Center(
         child: Text(
@@ -34,7 +35,7 @@ class _ExpenseChartState extends State<ExpenseChart> {
       ),
       sectionsSpace: 0,
       centerSpaceRadius: 40,
-      sections: expensesController.getCurrentExpenseItem().map((item) {
+      sections: items.map((item) {
         return PieChartSectionData(
           title: item.name,
           value: item.amount,
