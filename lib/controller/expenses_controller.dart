@@ -33,21 +33,19 @@ class ExpensesController extends GetxController {
   }
 
   void updateExpenseItems(Box box) {
-    expenseItems.value = box.values.cast<ExpenseItem>().toList();
-  }
-
-  void increment(DateTime newDateTime) {
-    currentDateTime.value = newDateTime;
+    expenseItems.assignAll(box.values.cast<ExpenseItem>().toList());
+    expenseItems.refresh();
   }
 
   RxList<ExpenseItem> getCurrentExpenseItem() {
-    return expenseItems
-        .where(
-          (item) =>
-              item.dateTime.year == currentDateTime.value.year &&
-              item.dateTime.month == currentDateTime.value.month,
-        )
-        .toList()
-        .obs;
+    return RxList(
+      expenseItems
+          .where(
+            (item) =>
+                item.dateTime.year == currentDateTime.value.year &&
+                item.dateTime.month == currentDateTime.value.month,
+          )
+          .toList(),
+    );
   }
 }

@@ -18,31 +18,35 @@ class _ExpenseChartState extends State<ExpenseChart> {
 
   @override
   Widget build(BuildContext context) {
-    items.assignAll(expensesController.getCurrentExpenseItem());
-    if (items.isEmpty) {
-      return const Center(
-        child: Text(
-          "There is no expenses in current month",
-          style: TextStyle(fontSize: 24),
-          textAlign: TextAlign.center,
+    return Obx(() {
+      items.assignAll(expensesController.getCurrentExpenseItem());
+      if (items.isEmpty) {
+        return const Center(
+          child: Text(
+            "There is no expenses in current month",
+            style: TextStyle(fontSize: 24),
+            textAlign: TextAlign.center,
+          ),
+        );
+      }
+
+      return PieChart(
+        PieChartData(
+          borderData: FlBorderData(
+            show: true,
+          ),
+          sectionsSpace: 0,
+          centerSpaceRadius: 40,
+          sections: items.map((item) {
+            return PieChartSectionData(
+              title: item.name,
+              value: item.amount,
+              color: generateRandomColor(),
+              titlePositionPercentageOffset: 1.25,
+            );
+          }).toList(),
         ),
       );
-    }
-
-    return PieChart(PieChartData(
-      borderData: FlBorderData(
-        show: true,
-      ),
-      sectionsSpace: 0,
-      centerSpaceRadius: 40,
-      sections: items.map((item) {
-        return PieChartSectionData(
-          title: item.name,
-          value: item.amount,
-          color: generateRandomColor(),
-          titlePositionPercentageOffset: 1.25,
-        );
-      }).toList(),
-    ));
+    });
   }
 }
