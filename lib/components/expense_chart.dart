@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monement/controller/expenses_controller.dart';
-import 'package:monement/model/expense/expense_item.dart';
 import 'package:monement/utils/colors.dart';
 
 class ExpenseChart extends StatefulWidget {
@@ -14,12 +13,11 @@ class ExpenseChart extends StatefulWidget {
 
 class _ExpenseChartState extends State<ExpenseChart> {
   final ExpensesController expensesController = Get.put(ExpensesController());
-  RxList<ExpenseItem> items = RxList<ExpenseItem>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      items.assignAll(expensesController.getCurrentExpenseItem());
+      final items = expensesController.getCurrentExpenseItem();
       if (items.isEmpty) {
         return const Center(
           child: Text(

@@ -22,6 +22,8 @@ class _ExpensesState extends State<Expenses> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      expenseItems.assignAll(expensesController.getCurrentExpenseItem());
+      expenseItems.sort((a, b) => a.dateTime.compareTo(b.dateTime));
       return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -43,43 +45,39 @@ class _ExpensesState extends State<Expenses> {
             )
           ],
         ),
-        body: Obx(() {
-          expenseItems.assignAll(expensesController.getCurrentExpenseItem());
-          expenseItems.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-          return Column(
-            children: [
-              const Expanded(
-                flex: 1,
-                child: ExpenseChart(),
-              ),
-              Expanded(
-                flex: 2,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (expenseItems.isNotEmpty)
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Expense Items",
-                            style: TextStyle(fontSize: 16),
-                          ),
+        body: Column(
+          children: [
+            const Expanded(
+              flex: 1,
+              child: ExpenseChart(),
+            ),
+            Expanded(
+              flex: 2,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (expenseItems.isNotEmpty)
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Expense Items",
+                          style: TextStyle(fontSize: 16),
                         ),
-                      const Divider(),
-                      ...expenseItems.reversed.map(
-                        (ExpenseItem item) {
-                          return _expenseItem(item, context);
-                        },
-                      )
-                    ],
-                  ),
+                      ),
+                    const Divider(),
+                    ...expenseItems.reversed.map(
+                          (ExpenseItem item) {
+                        return _expenseItem(item, context);
+                      },
+                    )
+                  ],
                 ),
-              )
-            ],
-          );
-        }),
+              ),
+            )
+          ],
+        ),
       );
     });
   }

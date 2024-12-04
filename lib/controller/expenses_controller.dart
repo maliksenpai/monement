@@ -34,10 +34,9 @@ class ExpensesController extends GetxController {
 
   void updateExpenseItems(Box box) {
     expenseItems.assignAll(box.values.cast<ExpenseItem>().toList());
-    expenseItems.refresh();
   }
 
-  RxList<ExpenseItem> getCurrentExpenseItem() {
+  List<ExpenseItem> getCurrentExpenseItem() {
     return RxList(
       expenseItems
           .where(
