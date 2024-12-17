@@ -33,18 +33,16 @@ class _StatisticsChartState extends State<StatisticsChart> {
         .map((entry) =>
             ExpenseStatisticItem(month: entry.key, amount: entry.value))
         .toList();
-    final lastTwelveMonth = resultValue.length > 10
+    final lastTenMonths = resultValue.length > 10
         ? resultValue.sublist(resultValue.length - 10)
         : resultValue;
-    return lastTwelveMonth;
+    return lastTenMonths;
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       final items = expensesController.expenseItems;
-      var groupedList = getGroupedList(items);
-      final maxValue = groupedList.map((item) => item.amount).reduce(max);
       if (items.isEmpty) {
         return const Center(
           child: Text(
@@ -53,9 +51,13 @@ class _StatisticsChartState extends State<StatisticsChart> {
             textAlign: TextAlign.center,
           ),
         );
-      }
+      };
+      var groupedList = getGroupedList(items);
+      final maxValue = groupedList.map((item) => item.amount).reduce(max);
+      final safeMaxValue = max(maxValue, 1.0);
+      const kChartPadding = EdgeInsets.fromLTRB(0, 16, 50, 32);
       return Padding(
-        padding: const EdgeInsets.only(top: 16, bottom: 32, left: 0, right: 50),
+        padding: kChartPadding,
         child: LineChart(
           LineChartData(
             borderData: FlBorderData(show: true),
@@ -77,7 +79,7 @@ class _StatisticsChartState extends State<StatisticsChart> {
                   reservedSize: 50,
                   getTitlesWidget: (value, meta) => Text('${value.toInt()}\$'),
                   showTitles: true,
-                  interval: (maxValue / 8).ceilToDouble(),
+                  interval: (safeMaxValue / 8).ceilToDouble(),
                 ),
               ),
               bottomTitles: AxisTitles(
