@@ -180,14 +180,12 @@ class _AddExpenseState extends State<AddExpense> {
                 onPressed: handleSave,
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(40),
-                  backgroundColor: Colors.amber,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.zero,
                   ),
                 ),
                 child: const Text(
                   "Save",
-                  style: TextStyle(color: Colors.white),
                 ),
               )
             ],

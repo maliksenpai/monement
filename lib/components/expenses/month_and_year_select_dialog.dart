@@ -79,12 +79,8 @@ Future<DateTime?> showMonthYearPickerDialog(BuildContext context) async {
                     );
                     Get.back(result: selectedDate);
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
-                  ),
                   child: const Text(
                     "OK",
-                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],

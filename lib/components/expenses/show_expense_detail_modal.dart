@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:monement/components/util/detail_item_row.dart';
 import 'package:monement/model/expense/expense_item.dart';
-import 'package:monement/page/add_expense.dart';
 import 'package:monement/utils/extensions.dart';
 
 void showExpenseDetailsModal(BuildContext context, ExpenseItem expenseItem) {
@@ -22,19 +22,31 @@ void showExpenseDetailsModal(BuildContext context, ExpenseItem expenseItem) {
               ),
             ),
             const SizedBox(height: 20),
-            _buildDetailRow("Name:", expenseItem.name),
+            DetailItemRow(
+              label: "Name:",
+              value: expenseItem.name,
+            ),
             const SizedBox(height: 10),
-            _buildDetailRow(
-                "Amount:", "\$${expenseItem.amount.toStringAsFixed(2)}"),
+            DetailItemRow(
+              label: "Amount:",
+              value: "\$${expenseItem.amount.toStringAsFixed(2)}",
+            ),
             const SizedBox(height: 10),
-            _buildDetailRow(
-                "Category:", expenseItem.category.formattedName),
+            DetailItemRow(
+              label: "Category:",
+              value: expenseItem.category.formattedName,
+            ),
             const SizedBox(height: 10),
-            _buildDetailRow(
-                "Date:", DateFormat.yMMMMd().format(expenseItem.dateTime)),
+            DetailItemRow(
+              label: "Date:",
+              value: DateFormat.yMMMMd().format(expenseItem.dateTime),
+            ),
             if (expenseItem.description.isNotEmpty) ...[
               const SizedBox(height: 10),
-              _buildDetailRow("Description:", expenseItem.description!),
+              DetailItemRow(
+                label: "Description:",
+                value: expenseItem.description,
+              ),
             ],
             const SizedBox(height: 20),
             Align(
@@ -48,24 +60,5 @@ void showExpenseDetailsModal(BuildContext context, ExpenseItem expenseItem) {
         ),
       ),
     ),
-  );
-}
-
-Widget _buildDetailRow(String label, String value) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        label,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(width: 5),
-      Expanded(
-        child: Text(
-          value,
-          style: const TextStyle(fontWeight: FontWeight.normal),
-        ),
-      ),
-    ],
   );
 }

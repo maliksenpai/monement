@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:monement/model/expense/expense_category_item.dart';
 import 'package:monement/model/expense/expense_item.dart';
 import 'package:monement/model/expense/expense_types.dart';
 
@@ -8,5 +9,6 @@ Future<void> initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ExpenseItemAdapter());
   Hive.registerAdapter(ExpenseCategoryAdapter());
+  Hive.registerAdapter(ExpenseCategoryItemAdapter());
   await Hive.openBox(expensesBox);
 }
