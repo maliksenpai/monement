@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:monement/components/statistics_chart.dart';
+import 'package:monement/components/statistic/statistic_comparision.dart';
+import 'package:monement/components/statistic/statistics_chart.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({super.key});
@@ -19,21 +20,28 @@ class _StatisticsState extends State<Statistics> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          shrinkWrap: true,
           children: [
             Text(
               "Monthly Expenses Chart",
               style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize),
+                fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+              ),
+              textAlign: TextAlign.center,
             ),
-            Text("Last 10 Months",
-                style: TextStyle(
-                    fontSize:
-                        Theme.of(context).textTheme.titleSmall?.fontSize)),
-            Flexible(
-              child: StatisticsChart(),
+            Text(
+              "Last 12 Months",
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.titleSmall?.fontSize,
+              ),
+              textAlign: TextAlign.center,
             ),
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height * 0.5,
+              child: const StatisticsChart(),
+            ),
+            const StatisticComparision(),
           ],
         ),
       ),

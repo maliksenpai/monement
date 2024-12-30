@@ -18,6 +18,7 @@ dependencies:
   intl:
   get: ^4.6.6
   form_builder_validators: 11.0.0
+  auto_animated: ^3.2.0
   fl_chart: ^0.69.0
 
 dev_dependencies:

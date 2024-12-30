@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:monement/controller/expenses_controller.dart';
-import 'package:monement/model/expense/expense_item.dart';
-import 'package:monement/model/expense/expense_statistic_item.dart';
 
 class StatisticsChart extends StatefulWidget {
   const StatisticsChart({super.key});
@@ -17,27 +15,6 @@ class StatisticsChart extends StatefulWidget {
 
 class _StatisticsChartState extends State<StatisticsChart> {
   final ExpensesController expensesController = Get.put(ExpensesController());
-
-  List<ExpenseStatisticItem> getGroupedList(RxList<ExpenseItem> items) {
-    Map<int, double> groupedData = {};
-    for (var item in items) {
-      int month = item.dateTime.month;
-      double price = item.amount;
-      if (groupedData.containsKey(month)) {
-        groupedData[month] = groupedData[month]! + price;
-      } else {
-        groupedData[month] = price;
-      }
-    }
-    final resultValue = groupedData.entries
-        .map((entry) =>
-            ExpenseStatisticItem(month: entry.key, amount: entry.value))
-        .toList();
-    final lastTenMonths = resultValue.length > 10
-        ? resultValue.sublist(resultValue.length - 10)
-        : resultValue;
-    return lastTenMonths;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +28,12 @@ class _StatisticsChartState extends State<StatisticsChart> {
             textAlign: TextAlign.center,
           ),
         );
-      };
-      var groupedList = getGroupedList(items);
+      }
+      var groupedList = expensesController.getLastYearData();
       final maxValue = groupedList.map((item) => item.amount).reduce(max);
-      final safeMaxValue = max(maxValue, 1.0);
+      final safeMaxValue = max(maxValue * 1.25, 1.0);
+      final minValue = groupedList.map((item) => item.amount).reduce(min);
+      final safeMinValue = max(minValue * 0.75, 1.0);
       const kChartPadding = EdgeInsets.fromLTRB(0, 16, 50, 32);
       return Padding(
         padding: kChartPadding,
@@ -62,6 +41,8 @@ class _StatisticsChartState extends State<StatisticsChart> {
           LineChartData(
             borderData: FlBorderData(show: true),
             gridData: const FlGridData(show: true, drawVerticalLine: false),
+            minY: safeMinValue,
+            maxY: safeMaxValue,
             titlesData: FlTitlesData(
               show: true,
               topTitles: const AxisTitles(
