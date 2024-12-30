@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 String DATE_FORMAT = "dd-MM-yyyy";
 

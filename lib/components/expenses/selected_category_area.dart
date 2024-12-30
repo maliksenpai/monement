@@ -12,7 +12,10 @@ class SelectedCategoryArea extends StatelessWidget {
   Widget build(BuildContext context) {
     final int totalExpenseLength =
         expensesController.getCurrentExpenseItem().length;
-    final double totalExpenses = expensesController.getCurrentExpenseItem().map((item) => item.amount).reduce((item, total) => total += item);
+    final double totalExpenses = expensesController
+        .getCurrentExpenseItem()
+        .map((item) => item.amount)
+        .fold(0.0, (item, total) => total += item);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 24),
@@ -24,7 +27,7 @@ class SelectedCategoryArea extends StatelessWidget {
             label: "Number of Expenses:",
           ),
           DetailItemRow(
-            value: totalExpenses.toStringAsFixed(2),
+            value: "${totalExpenses.toStringAsFixed(2)}\$",
             label: "Total Expenses:",
           ),
           ElevatedButton(
