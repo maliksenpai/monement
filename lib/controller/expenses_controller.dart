@@ -5,13 +5,12 @@ import 'package:monement/database/hive_configuration.dart';
 import 'package:monement/model/expense/expense_category_item.dart';
 import 'package:monement/model/expense/expense_item.dart';
 import 'package:monement/model/expense/expense_statistic_item.dart';
-import 'package:monement/model/expense/expense_types.dart';
 
 class ExpensesController extends GetxController {
   late ValueListenable<Box> expensesListenable;
   Rx<DateTime> currentDateTime = DateTime.now().obs;
   RxList<ExpenseItem> expenseItems = RxList.empty();
-  Rx<ExpenseCategory?> selectedCategory = Rx(null);
+  Rx<String?> selectedCategory = Rx(null);
 
   @override
   void onInit() {
@@ -66,10 +65,10 @@ class ExpensesController extends GetxController {
     return lastYearItems.obs;
   }
 
-  RxMap<int, double> getCategoryGroupedData(List<ExpenseItem> expenseList) {
-    Map<int, double> groupedData = {};
+  RxMap<String, double> getCategoryGroupedData(List<ExpenseItem> expenseList) {
+    Map<String, double> groupedData = {};
     for (var item in expenseList) {
-      int category = item.category.index;
+      String category = item.category;
       double price = item.amount;
       if (groupedData.containsKey(category)) {
         groupedData[category] = groupedData[category]! + price;
@@ -82,11 +81,11 @@ class ExpensesController extends GetxController {
 
   RxList<ExpenseCategoryItem> getCurrentExpensesWithCategory() {
     List<ExpenseItem> expenses = getCurrentExpenseItem();
-    RxMap<int, double> categoryMap = getCategoryGroupedData(expenses);
+    RxMap<String, double> categoryMap = getCategoryGroupedData(expenses);
 
     return categoryMap.entries
         .map((entry) => ExpenseCategoryItem(
-            amount: entry.value, category: ExpenseCategory.values[entry.key]))
+            amount: entry.value, category: entry.key))
         .toList()
         .obs;
   }

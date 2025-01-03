@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:monement/components/util/detail_item_row.dart';
 import 'package:monement/model/expense/expense_item.dart';
-import 'package:monement/utils/extensions.dart';
 
 void showExpenseDetailsModal(BuildContext context, ExpenseItem expenseItem) {
   Get.dialog(
@@ -34,7 +33,7 @@ void showExpenseDetailsModal(BuildContext context, ExpenseItem expenseItem) {
             const SizedBox(height: 10),
             DetailItemRow(
               label: "Category:",
-              value: expenseItem.category.formattedName,
+              value: expenseItem.category,
             ),
             const SizedBox(height: 10),
             DetailItemRow(

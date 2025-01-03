@@ -18,7 +18,7 @@ class ExpenseCategoryItemAdapter extends TypeAdapter<ExpenseCategoryItem> {
     };
     return ExpenseCategoryItem(
       amount: fields[4] as double,
-      category: fields[3] as ExpenseCategory,
+      category: fields[3] as String,
     );
   }
 
