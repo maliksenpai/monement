@@ -49,11 +49,12 @@ class _UpdateInvestmentState extends State<UpdateInvestment> {
             currentInvestment: currentInvestment),
       );
       Get.back();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Investment Updated"),
-          behavior: SnackBarBehavior.floating,
-        ),
+      Get.snackbar(
+        'Success',
+        'Investment Updated',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
       );
     }
   }

@@ -8,30 +8,34 @@ class TotalInvestmentCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final InvestmentController investmentController =
-        Get.put(InvestmentController());
+        Get.find<InvestmentController>();
 
-    return Container(
-      height: MediaQuery.sizeOf(context).height * 0.3,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.amberAccent,
-          width: 20,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Total Investment",
-            style: TextStyle(fontSize: 24),
+    return Obx(
+      () {
+        return Container(
+          height: MediaQuery.sizeOf(context).height * 0.3,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.amberAccent,
+              width: 20,
+            ),
           ),
-          Text(
-            "${investmentController.getTotalInvestment().toStringAsFixed(2)}\$",
-            style: const TextStyle(fontSize: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Total Investment",
+                style: TextStyle(fontSize: 24),
+              ),
+              Text(
+                "${investmentController.getTotalInvestment().toStringAsFixed(2)}\$",
+                style: const TextStyle(fontSize: 24),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

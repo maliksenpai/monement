@@ -18,13 +18,13 @@ class SelectedCategoryArea extends StatelessWidget {
         .fold(0.0, (item, total) => total += item);
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 24),
+      padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DetailItemRow(
-            value: expensesController.selectedCategory.value!,
+            value: expensesController.selectedCategory.value ?? "Unknown",
             label: "Category:",
           ),
           DetailItemRow(

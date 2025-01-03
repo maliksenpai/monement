@@ -14,6 +14,12 @@ class InvestmentController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    investmentListenable.removeListener(updateInvestmentsCallback);
+    super.onClose();
+  }
+
   void updateInvestmentsCallback() {
     updateInvestmentItems(Hive.box(investmentBox));
   }
@@ -30,6 +36,8 @@ class InvestmentController extends GetxController {
   }
 
   double getTotalInvestment() {
-    return investmentItems.map((item) => item.amount).fold(0.0, (total, item) => total += item);
+    return investmentItems
+        .map((item) => item.amount)
+        .fold(0.0, (total, item) => total += item);
   }
 }
