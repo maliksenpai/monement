@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monement/database/hive_configuration.dart';
-import 'package:monement/page/page_tab.dart';
+import 'package:monement/page/homepage.dart';
 import 'package:monement/theme.dart';
 
 Future<void> main() async {
@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Monement',
       theme: themeData,
-      home: const PageTab(),
+      home: const Homepage(),
     );
   }
 }

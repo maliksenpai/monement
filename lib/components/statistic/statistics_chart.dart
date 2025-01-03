@@ -34,7 +34,7 @@ class _StatisticsChartState extends State<StatisticsChart> {
       final safeMaxValue = max(maxValue * 1.25, 1.0);
       final minValue = groupedList.map((item) => item.amount).reduce(min);
       final safeMinValue = max(minValue * 0.75, 1.0);
-      const kChartPadding = EdgeInsets.fromLTRB(0, 16, 50, 32);
+      const kChartPadding = EdgeInsets.fromLTRB(16, 16, 36, 32);
       return Padding(
         padding: kChartPadding,
         child: LineChart(
@@ -66,7 +66,7 @@ class _StatisticsChartState extends State<StatisticsChart> {
               bottomTitles: AxisTitles(
                 sideTitles: SideTitles(
                   getTitlesWidget: (value, meta) => Text(
-                    DateFormat("MMMM").format(
+                    DateFormat("MMM").format(
                       DateTime(
                         0,
                         value.toInt(),

@@ -5,7 +5,6 @@ import 'package:monement/components/expenses/selected_category_area.dart';
 import 'package:monement/controller/expenses_controller.dart';
 import 'package:monement/model/expense/expense_item.dart';
 import 'package:monement/utils/colors.dart';
-import 'package:monement/utils/extensions.dart';
 
 class ExpenseChart extends StatefulWidget {
   const ExpenseChart({super.key});
@@ -26,7 +25,7 @@ class _ExpenseChartState extends State<ExpenseChart> {
         final items = categoryNotSelected
             ? expensesController.getCurrentExpensesWithCategory()
             : expensesController.getCurrentExpenseItem();
-        final screenWidth = MediaQuery.of(context).size.width;
+        final screenWidth = MediaQuery.sizeOf(context).width;
 
         if (items.isEmpty) {
           return const Center(
@@ -68,7 +67,7 @@ class _ExpenseChartState extends State<ExpenseChart> {
                     (item) {
                       return PieChartSectionData(
                         title: categoryNotSelected
-                            ? item.category.formattedName
+                            ? item.category
                             : (item as ExpenseItem).name,
                         value: item.amount,
                         color: generateRandomColor(),

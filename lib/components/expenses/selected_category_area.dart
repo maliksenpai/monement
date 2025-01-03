@@ -21,7 +21,12 @@ class SelectedCategoryArea extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 24),
       child: Column(
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          DetailItemRow(
+            value: expensesController.selectedCategory.value!,
+            label: "Category:",
+          ),
           DetailItemRow(
             value: totalExpenseLength.toString(),
             label: "Number of Expenses:",
@@ -30,13 +35,16 @@ class SelectedCategoryArea extends StatelessWidget {
             value: "${totalExpenses.toStringAsFixed(2)}\$",
             label: "Total Expenses:",
           ),
-          ElevatedButton(
-            onPressed: () {
-              expensesController.selectedCategory.value = null;
-            },
-            child: const Text(
-              "Clear",
-              softWrap: false,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: ElevatedButton(
+              onPressed: () {
+                expensesController.selectedCategory.value = null;
+              },
+              child: const Text(
+                "Clear",
+                softWrap: false,
+              ),
             ),
           )
         ],

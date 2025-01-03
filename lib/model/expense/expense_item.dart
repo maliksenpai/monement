@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:monement/model/expense/expense_category_item.dart';
-import 'package:monement/model/expense/expense_types.dart';
 
 part 'expense_item.g.dart';
 

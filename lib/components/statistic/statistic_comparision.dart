@@ -37,7 +37,8 @@ class _StatisticComparisionState extends State<StatisticComparision> {
     final averageExpense = getAverageExpenseThisYear();
     final finalColor =
         averageExpense >= thisMonthExpense ? Colors.green : Colors.red;
-    final compareAverageAndCurrent = ((averageExpense / thisMonthExpense) - 1)  * 100;
+    final compareAverageAndCurrent =
+        ((averageExpense / thisMonthExpense) - 1) * 100;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +59,9 @@ class _StatisticComparisionState extends State<StatisticComparision> {
                 const Divider(
                   color: Colors.amber,
                 ),
-                Text(averageExpense.toStringAsFixed(2)),
+                Text(averageExpense.isNaN
+                    ? "-"
+                    : "${averageExpense.toStringAsFixed(2)}\$"),
                 const SizedBox(
                   height: 8,
                 ),
@@ -86,27 +89,30 @@ class _StatisticComparisionState extends State<StatisticComparision> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      thisMonthExpense.toStringAsFixed(2),
+                      thisMonthExpense.isNaN
+                          ? "-"
+                          : "${thisMonthExpense.toStringAsFixed(2)}\$",
                       style: TextStyle(
                         color: finalColor,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          finalColor == Colors.green
-                              ? Icons.arrow_upward
-                              : Icons.arrow_downward,
-                          color: finalColor,
-                        ),
-                        Text(
-                          '%${compareAverageAndCurrent.toStringAsFixed(2)}',
-                          style: TextStyle(
+                    if (!compareAverageAndCurrent.isNaN)
+                      Row(
+                        children: [
+                          Icon(
+                            finalColor == Colors.green
+                                ? Icons.arrow_downward
+                                : Icons.arrow_upward,
                             color: finalColor,
                           ),
-                        )
-                      ],
-                    )
+                          Text(
+                            '%${compareAverageAndCurrent.toStringAsFixed(2)}',
+                            style: TextStyle(
+                              color: finalColor,
+                            ),
+                          )
+                        ],
+                      )
                   ],
                 ),
                 const SizedBox(

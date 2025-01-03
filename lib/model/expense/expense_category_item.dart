@@ -1,12 +1,11 @@
 import 'package:hive/hive.dart';
-import 'package:monement/model/expense/expense_types.dart';
 
 part 'expense_category_item.g.dart';
 
 @HiveType(typeId: 2)
 class ExpenseCategoryItem {
   @HiveField(3)
-  ExpenseCategory category;
+  String category;
   @HiveField(4)
   double amount;
 

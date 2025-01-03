@@ -7,3 +7,7 @@ final List<TabItem> tabItems = [
   TabItem(id: 2, label: "Investments", icon: Icons.trending_up),
   TabItem(id: 3, label: "Statistics", icon: Icons.stacked_bar_chart),
 ];
+
+const EdgeInsets formPadding = const EdgeInsets.only(left: 20, right: 20, top: 20);
+
+final defaultCategories = ["Others"];
