@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:monement/controller/investment_controller.dart';
 import 'package:monement/database/hive_configuration.dart';
 import 'package:monement/model/investment/investment_item.dart';
+import 'package:monement/utils/random.dart';
 
 class UpdateInvestment extends StatefulWidget {
   const UpdateInvestment({super.key});
@@ -43,10 +44,13 @@ class _UpdateInvestmentState extends State<UpdateInvestment> {
           selectedToggle.first ? total + amount : total - amount;
       box.add(
         InvestmentItem(
-            description: _descriptionController.text,
-            dateTime: DateTime.now(),
-            amount: amount,
-            currentInvestment: currentInvestment),
+          description: _descriptionController.text,
+          dateTime: DateTime.now(),
+          amount: amount,
+          currentInvestment: currentInvestment,
+          isIncreased: selectedToggle.first,
+          key: generateRandomKey(),
+        ),
       );
       Get.back();
       Get.snackbar(
@@ -85,7 +89,7 @@ class _UpdateInvestmentState extends State<UpdateInvestment> {
                       minWidth: MediaQuery.sizeOf(context).width * 0.45,
                       minHeight: 50,
                     ),
-                    color: Colors.black,
+                    color: Get.isDarkMode ? Colors.grey[500] : Colors.black,
                     selectedColor: Colors.white,
                     fillColor: selectedToggle.first ? Colors.green : Colors.red,
                     children: const [

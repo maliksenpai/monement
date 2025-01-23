@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monement/components/util/detail_item_row.dart';
 import 'package:monement/controller/expenses_controller.dart';
+import 'package:monement/controller/settings_controller.dart';
 
 class SelectedCategoryArea extends StatelessWidget {
   SelectedCategoryArea({super.key});
 
   final ExpensesController expensesController = Get.put(ExpensesController());
+  final settingsController = Get.put(SettingsController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +24,22 @@ class SelectedCategoryArea extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          DetailItemRow(
-            value: expensesController.selectedCategory.value ?? "Unknown",
-            label: "Category:",
+          _itemRow(
+            "Category",
+            expensesController.selectedCategory.value ?? "Unknown",
+            context,
           ),
-          DetailItemRow(
-            value: totalExpenseLength.toString(),
-            label: "Number of Expenses:",
+          _itemRow(
+            "Number of Expenses",
+            totalExpenseLength.toString(),
+            context,
           ),
-          DetailItemRow(
-            value: "${totalExpenses.toStringAsFixed(2)}\$",
-            label: "Total Expenses:",
+          Obx(
+            () => _itemRow(
+              "Total Expenses",
+              "${totalExpenses.toStringAsFixed(2)}${settingsController.selectedCurrency.value}",
+              context,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -52,3 +58,36 @@ class SelectedCategoryArea extends StatelessWidget {
     );
   }
 }
+
+Widget _itemRow(String label, String value, BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).primaryColor,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: const TextStyle(fontWeight: FontWeight.normal),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }

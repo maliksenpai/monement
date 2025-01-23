@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:get/get.dart';
 import 'package:monement/components/homepage/homepage_fab.dart';
 import 'package:monement/page/expenses.dart';
 import 'package:monement/page/investments.dart';
+import 'package:monement/page/settings.dart';
 import 'package:monement/page/statistics.dart';
 
 class Homepage extends StatefulWidget {
@@ -30,6 +32,15 @@ class _HomepageState extends State<Homepage> {
             Statistics(),
           ],
         ),
+      ),
+      appBar: AppBar(
+        title: const Text("Monement"),
+        actions: [
+          IconButton(
+            onPressed: () => Get.to(() => const Settings(), transition: Transition.leftToRight),
+            icon: const Icon(Icons.settings),
+          ),
+        ],
       ),
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: HomepageFab(),

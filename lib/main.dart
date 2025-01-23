@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monement/database/hive_configuration.dart';
@@ -12,13 +13,19 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Monement',
-      theme: themeData,
-      home: const Homepage(),
+    return AdaptiveTheme(
+      light: themeData,
+      dark: darkThemeData,
+      initial: AdaptiveThemeMode.light,
+      builder: (theme, _) {
+        return GetMaterialApp(
+          title: 'Monement',
+          theme: theme,
+          home: const Homepage(),
+        );
+      },
     );
   }
 }

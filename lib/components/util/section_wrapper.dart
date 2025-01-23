@@ -4,7 +4,8 @@ class SectionWrapper extends StatelessWidget {
   final String title;
   final List<Widget> children;
 
-  SectionWrapper({super.key, required this.title, required this.children});
+  const SectionWrapper(
+      {super.key, required this.title, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,8 @@ class SectionWrapper extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
-        const Divider(
-          color: Colors.amberAccent,
+        Divider(
+          color: Theme.of(context).primaryColor,
           thickness: 2,
         ),
         ...children,

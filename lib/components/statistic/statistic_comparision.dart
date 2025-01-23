@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monement/controller/expenses_controller.dart';
+import 'package:monement/controller/settings_controller.dart';
 
 class StatisticComparision extends StatefulWidget {
   const StatisticComparision({super.key});
@@ -11,6 +12,7 @@ class StatisticComparision extends StatefulWidget {
 
 class _StatisticComparisionState extends State<StatisticComparision> {
   final ExpensesController expensesController = Get.put(ExpensesController());
+  final settingsController = Get.put(SettingsController());
   final currentDateTime = DateTime.now();
 
   double getAverageExpenseThisYear() {
@@ -56,12 +58,12 @@ class _StatisticComparisionState extends State<StatisticComparision> {
                   "Your average spending in the last 12 months",
                   style: titleStyle,
                 ),
-                const Divider(
-                  color: Colors.amber,
+                Divider(
+                  color: Theme.of(context).primaryColor,
                 ),
                 Text(averageExpense.isNaN
                     ? "-"
-                    : "${averageExpense.toStringAsFixed(2)}\$"),
+                    : "${averageExpense.toStringAsFixed(2)}${settingsController.selectedCurrency.value}"),
                 const SizedBox(
                   height: 8,
                 ),
@@ -73,52 +75,54 @@ class _StatisticComparisionState extends State<StatisticComparision> {
           padding: padding,
           width: double.infinity,
           child: Card(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  "Your total spending this month",
-                  style: titleStyle,
-                ),
-                const Divider(
-                  color: Colors.amber,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      thisMonthExpense.isNaN
-                          ? "-"
-                          : "${thisMonthExpense.toStringAsFixed(2)}\$",
-                      style: TextStyle(
-                        color: finalColor,
+            child: Obx(
+              () => Column(
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "Your total spending this month",
+                    style: titleStyle,
+                  ),
+                  Divider(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        thisMonthExpense.isNaN
+                            ? "-"
+                            : "${thisMonthExpense.toStringAsFixed(2)}${settingsController.selectedCurrency.value}",
+                        style: TextStyle(
+                          color: finalColor,
+                        ),
                       ),
-                    ),
-                    if (!compareAverageAndCurrent.isNaN)
-                      Row(
-                        children: [
-                          Icon(
-                            finalColor == Colors.green
-                                ? Icons.arrow_downward
-                                : Icons.arrow_upward,
-                            color: finalColor,
-                          ),
-                          Text(
-                            '%${compareAverageAndCurrent.toStringAsFixed(2)}',
-                            style: TextStyle(
+                      if (!compareAverageAndCurrent.isNaN)
+                        Row(
+                          children: [
+                            Icon(
+                              finalColor == Colors.green
+                                  ? Icons.arrow_downward
+                                  : Icons.arrow_upward,
                               color: finalColor,
                             ),
-                          )
-                        ],
-                      )
-                  ],
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-              ],
+                            Text(
+                              '%${compareAverageAndCurrent.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                color: finalColor,
+                              ),
+                            )
+                          ],
+                        )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ),
             ),
           ),
         )

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:monement/components/expenses/category_chip_list.dart';
 import 'package:monement/components/expenses/expense_chart.dart';
 import 'package:monement/components/expenses/expense_list.dart';
 import 'package:monement/components/expenses/month_and_year_select_dialog.dart';
@@ -49,20 +50,22 @@ class _ExpensesState extends State<Expenses> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.3,
+            height: MediaQuery.sizeOf(context).height * 0.35,
             child: const ExpenseChart(),
           ),
+          if (expensesController.selectedCategory.value != null)
+            const CategoryChipList(),
           if (expenseItems.isNotEmpty)
-            const Column(
+            Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "Expense Items",
-                    style: TextStyle(fontSize: 16),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
-                Divider(),
+                const Divider(),
               ],
             ),
           ExpenseList(

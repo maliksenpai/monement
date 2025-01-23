@@ -36,8 +36,12 @@ class InvestmentController extends GetxController {
   }
 
   double getTotalInvestment() {
-    return investmentItems
-        .map((item) => item.amount)
-        .fold(0.0, (total, item) => total += item);
+    return investmentItems.fold(0.0, (total, item) {
+      if (item.isIncreased) {
+        return total + item.amount;
+      } else {
+        return total - item.amount;
+      }
+    });
   }
 }

@@ -22,19 +22,22 @@ class ExpenseItemAdapter extends TypeAdapter<ExpenseItem> {
       name: fields[2] as String,
       category: fields[3] as String,
       description: fields[1] as String,
+      key: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, ExpenseItem obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.dateTime)
       ..writeByte(1)
       ..write(obj.description)
       ..writeByte(2)
       ..write(obj.name)
+      ..writeByte(5)
+      ..write(obj.key)
       ..writeByte(3)
       ..write(obj.category)
       ..writeByte(4)

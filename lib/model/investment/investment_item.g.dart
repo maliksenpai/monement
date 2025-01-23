@@ -21,13 +21,15 @@ class InvestmentItemAdapter extends TypeAdapter<InvestmentItem> {
       amount: fields[2] as double,
       description: fields[1] as String,
       currentInvestment: fields[3] as double,
+      isIncreased: fields[4] as bool,
+      key: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, InvestmentItem obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.dateTime)
       ..writeByte(1)
@@ -35,7 +37,11 @@ class InvestmentItemAdapter extends TypeAdapter<InvestmentItem> {
       ..writeByte(2)
       ..write(obj.amount)
       ..writeByte(3)
-      ..write(obj.currentInvestment);
+      ..write(obj.currentInvestment)
+      ..writeByte(4)
+      ..write(obj.isIncreased)
+      ..writeByte(5)
+      ..write(obj.key);
   }
 
   @override

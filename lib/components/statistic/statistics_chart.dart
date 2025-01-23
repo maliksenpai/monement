@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:monement/controller/expenses_controller.dart';
+import 'package:monement/controller/settings_controller.dart';
 
 class StatisticsChart extends StatefulWidget {
   const StatisticsChart({super.key});
@@ -15,6 +16,7 @@ class StatisticsChart extends StatefulWidget {
 
 class _StatisticsChartState extends State<StatisticsChart> {
   final ExpensesController expensesController = Get.put(ExpensesController());
+  final settingsController = Get.put(SettingsController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,69 +39,72 @@ class _StatisticsChartState extends State<StatisticsChart> {
       const kChartPadding = EdgeInsets.fromLTRB(16, 16, 36, 32);
       return Padding(
         padding: kChartPadding,
-        child: LineChart(
-          LineChartData(
-            borderData: FlBorderData(show: true),
-            gridData: const FlGridData(show: true, drawVerticalLine: false),
-            minY: safeMinValue,
-            maxY: safeMaxValue,
-            titlesData: FlTitlesData(
-              show: true,
-              topTitles: const AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: false,
+        child: Obx(
+          () => BarChart(
+            BarChartData(
+              borderData: FlBorderData(show: true),
+              gridData: const FlGridData(show: true, drawVerticalLine: false),
+              minY: safeMinValue,
+              maxY: safeMaxValue,
+              titlesData: FlTitlesData(
+                show: true,
+                topTitles: const AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: false,
+                  ),
                 ),
-              ),
-              rightTitles: const AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: false,
+                rightTitles: const AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: false,
+                  ),
                 ),
-              ),
-              leftTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  reservedSize: 50,
-                  getTitlesWidget: (value, meta) => Text('${value.toInt()}\$'),
-                  showTitles: true,
-                  interval: (safeMaxValue / 8).ceilToDouble(),
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    reservedSize: 50,
+                    getTitlesWidget: (value, meta) => Text(
+                      '${value.toInt()}${settingsController.selectedCurrency.value}',
+                    ),
+                    showTitles: true,
+                    interval: (safeMaxValue / 8).ceilToDouble(),
+                  ),
                 ),
-              ),
-              bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  getTitlesWidget: (value, meta) => Text(
-                    DateFormat("MMM").format(
-                      DateTime(
-                        0,
-                        value.toInt(),
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    getTitlesWidget: (value, meta) => Text(
+                      DateFormat("MMM").format(
+                        DateTime(
+                          0,
+                          value.toInt(),
+                        ),
                       ),
                     ),
+                    showTitles: true,
+                    interval: 1,
                   ),
-                  showTitles: true,
-                  interval: 1,
                 ),
               ),
+              barGroups: groupedList
+                  .map(
+                    (item) => BarChartGroupData(
+                      x: item.month,
+                      showingTooltipIndicators: [0],
+                      barRods: [
+                        BarChartRodData(
+                          toY: item.amount,
+                          gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context).primaryColor,
+                              Theme.of(context).colorScheme.secondary
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                  .toList(),
             ),
-            lineBarsData: [
-              LineChartBarData(
-                belowBarData: BarAreaData(
-                  show: true,
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.yellow.withOpacity(0.4),
-                      Colors.amber.withOpacity(0.4),
-                      Colors.yellowAccent.withOpacity(0.4),
-                    ],
-                  ),
-                ),
-                spots: groupedList
-                    .map(
-                      (item) => FlSpot(
-                        item.month.toDouble(),
-                        item.amount,
-                      ),
-                    )
-                    .toList(),
-              ),
-            ],
           ),
         ),
       );

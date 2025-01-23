@@ -11,6 +11,8 @@ class ExpenseItem extends ExpenseCategoryItem {
   String description;
   @HiveField(2)
   String name;
+  @HiveField(5)
+  int key;
 
   ExpenseItem({
     required this.dateTime,
@@ -18,5 +20,6 @@ class ExpenseItem extends ExpenseCategoryItem {
     required this.name,
     required super.category,
     required this.description,
+    required this.key,
   });
 }
