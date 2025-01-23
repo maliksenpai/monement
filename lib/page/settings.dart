@@ -44,11 +44,11 @@ class _SettingsState extends State<Settings> {
           actions: <Widget>[
             TextButton(
               child: const Text('No'),
-              onPressed: () => Get.back(result: false),
+              onPressed: () => Get.back(result: true),
             ),
             TextButton(
               child: const Text('Yes'),
-              onPressed: () => Get.back(result: false),
+              onPressed: () => Get.back(result: true),
             ),
           ],
         );

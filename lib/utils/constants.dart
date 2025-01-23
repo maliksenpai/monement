@@ -29,8 +29,8 @@ const List<String> currencyIcons = [
   "₩",     // KRW
   "S\$",   // SGD
   "HK\$",  // HKD
-  "kr",    // SEK
-  "kr",    // NOK
+  "SEK",    // SEK
+  "NOK",    // NOK
   "Mex\$", // MXN
   "R",     // ZAR
 ];

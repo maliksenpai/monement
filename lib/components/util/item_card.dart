@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:monement/controller/settings_controller.dart';
 
 class ItemCard extends StatelessWidget {
-  final SettingsController settingsController = Get.put(SettingsController());
 
   final void Function()? onTap;
   final DateTime dateTime;
