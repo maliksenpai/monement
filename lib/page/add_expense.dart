@@ -3,22 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:monement/components/expenses/add_category.dart';
+import 'package:monement/controller/settings_controller.dart';
 import 'package:monement/database/hive_configuration.dart';
 import 'package:monement/model/expense/expense_item.dart';
 import 'package:monement/utils/date.dart';
+import 'package:monement/utils/random.dart';
 
 class AddExpense extends StatefulWidget {
-  const AddExpense({super.key});
+  final ExpenseItem? initialExpense;
+  const AddExpense({super.key, this.initialExpense});
 
   @override
   State<AddExpense> createState() => _AddExpenseState();
 }
 
 class _AddExpenseState extends State<AddExpense> {
+  final SettingsController settingsController = Get.put(SettingsController());
   final categories = Hive.box<String>(categoryBox);
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -31,18 +34,32 @@ class _AddExpenseState extends State<AddExpense> {
     if (_formKey.currentState!.validate()) {
       Box box = Hive.box(expensesBox);
       final category = categories.values.toList()[selectedCategory.first];
-      box.add(
-        ExpenseItem(
-          amount: double.parse(_amountController.text),
-          category: category,
-          dateTime: DateFormat(DATE_FORMAT).parse(_dateController.text),
-          description: _descriptionController.text,
-          name: _nameController.text != ""
-              ? _nameController.text
-              : "${category} Expense",
-        ),
+      final totalItemCurrentCategory = box.values.fold(1, (total, item) {
+        if (item.category == category) {
+          total += 1;
+        }
+        return total;
+      });
+      final expenseItem = ExpenseItem(
+        amount: double.parse(_amountController.text),
+        category: category,
+        dateTime: DateFormat(DATE_FORMAT).parse(_dateController.text),
+        description: _descriptionController.text,
+        name: _nameController.text != ""
+            ? _nameController.text
+            : "$category Expense - $totalItemCurrentCategory",
+        key: widget.initialExpense != null
+            ? widget.initialExpense!.key
+            : generateRandomKey(),
       );
-      Get.back();
+
+      if (widget.initialExpense != null) {
+        box.put(widget.initialExpense!.key, expenseItem);
+      } else {
+        box.put(expenseItem.key, expenseItem);
+      }
+
+      Navigator.pop(context);
       Get.snackbar(
         "Success",
         "Expense Created",
@@ -55,7 +72,17 @@ class _AddExpenseState extends State<AddExpense> {
 
   @override
   void initState() {
-    _dateController.text = DateFormat(DATE_FORMAT).format(DateTime.now());
+    if (widget.initialExpense != null) {
+      _nameController.text = widget.initialExpense!.name;
+      _descriptionController.text = widget.initialExpense!.description;
+      _amountController.text = widget.initialExpense!.amount.toString();
+      _dateController.text =
+          DateFormat(DATE_FORMAT).format(widget.initialExpense!.dateTime);
+      selectedCategory.first =
+          categories.values.toList().indexOf(widget.initialExpense!.category);
+    } else {
+      _dateController.text = DateFormat(DATE_FORMAT).format(DateTime.now());
+    }
     super.initState();
   }
 
@@ -145,17 +172,14 @@ class _AddExpenseState extends State<AddExpense> {
                 valueListenable: categories.listenable(),
                 builder: (context, Box<String> box, _) {
                   return ChipList(
-                    listOfChipNames: [
-                      ...categories.values.toList(),
-                      "Add Category"
-                    ],
+                    listOfChipNames: [...categories.values, "Add Category +"],
                     listOfChipIndicesCurrentlySelected: selectedCategory,
-                    inactiveTextColorList: [Colors.amberAccent],
+                    inactiveTextColorList: [Theme.of(context).primaryColor],
                     elevation: 1,
                     shouldWrap: true,
-                    shadowColor: [Colors.amberAccent],
+                    shadowColor: [Theme.of(context).primaryColor],
                     showCheckmark: false,
-                    activeBgColorList: [Colors.amberAccent],
+                    activeBgColorList: [Theme.of(context).primaryColor],
                     extraOnToggle: (int index) {
                       if (index == categories.values.length) {
                         showAddCategoryDialog();

@@ -22,13 +22,13 @@ class _HomepageFabState extends State<HomepageFab> {
         child: const Icon(Icons.add),
         fabSize: ExpandableFabSize.regular,
         foregroundColor: Colors.white,
-        backgroundColor: Colors.amber,
+        backgroundColor: Theme.of(context).primaryColor,
         shape: const CircleBorder(),
       ),
       closeButtonBuilder: DefaultFloatingActionButtonBuilder(
         child: const Icon(Icons.close),
         fabSize: ExpandableFabSize.small,
-        foregroundColor: Colors.amber,
+        foregroundColor: Theme.of(context).primaryColor,
         backgroundColor: Colors.white,
         shape: const CircleBorder(),
       ),
@@ -37,11 +37,12 @@ class _HomepageFabState extends State<HomepageFab> {
       ),
       children: [
         FloatingActionButton.extended(
+          heroTag: "add_expense",
           label: const Text(
             "Add Expense",
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Colors.amber,
+          backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             Get.bottomSheet(
               const AddExpense(),
@@ -51,11 +52,12 @@ class _HomepageFabState extends State<HomepageFab> {
           },
         ),
         FloatingActionButton.extended(
+          heroTag: "update_investment",
           label: const Text(
             "Update Investment",
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Colors.amber,
+          backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             Get.bottomSheet(
               const UpdateInvestment(),

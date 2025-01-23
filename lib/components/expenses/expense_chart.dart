@@ -43,7 +43,6 @@ class _ExpenseChartState extends State<ExpenseChart> {
             AnimatedContainer(
               duration: const Duration(seconds: 1),
               width: categoryNotSelected ? screenWidth * 1 : screenWidth * 0.6,
-              height: 300,
               child: PieChart(
                 swapAnimationDuration: const Duration(seconds: 2),
                 PieChartData(
@@ -81,7 +80,6 @@ class _ExpenseChartState extends State<ExpenseChart> {
             AnimatedContainer(
               duration: const Duration(seconds: 1),
               width: categoryNotSelected ? screenWidth * 0 : screenWidth * 0.4,
-              height: 300,
               child: !categoryNotSelected
                   ? SelectedCategoryArea()
                   : const SizedBox.shrink(),
