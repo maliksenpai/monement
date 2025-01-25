@@ -1,4 +1,4 @@
-# Money Management Application
+# Money Management Application - Monement
 
 ## Overview
 The **Money Management Application** is a powerful and intuitive tool designed to help users track their daily expenses and manage their investments. It provides a clean and user-friendly interface with real-time updates, customizable categories, and insightful visualizations to better understand spending habits and investment growth.
