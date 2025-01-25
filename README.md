@@ -78,24 +78,6 @@ lib/
 
 ---
 
-## Usage
-
-### Adding Expenses
-1. Navigate to the **Add Expense** screen.
-2. Fill in the required fields (name, amount, date, etc.).
-3. Tap **Save** to add the expense.
-
-### Managing Categories
-1. Tap the **Categories** button.
-2. Use the input field to create a new category.
-3. Save changes, and the new category will be available across the app.
-
-### Tracking Investments
-1. View the **Total Investment** card for an overview of your investment amount.
-2. Log investment changes (increase/decrease) with descriptions and timestamps.
-
----
-
 ## Customization
 
 ### Adding Colors to the Theme
