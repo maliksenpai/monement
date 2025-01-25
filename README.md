@@ -94,10 +94,15 @@ lib/
 
 | Package               | Version |
 |-----------------------|---------|
-| flutter               | ^3.0.0  |
 | hive                  | ^2.2.3  |
-| get                   | ^4.6.5  |
-| form_builder_validators | ^8.1.0 |
+| hive_flutter          | ^1.1.0  |
+| get                   | ^4.6.6  |
+| form_builder_validators | ^11.0.0 |
+| chip_list | ^3.1.0 |
+| auto_animated | ^3.2.0 |
+| flutter_expandable_fab | ^2.3.0 |
+| fl_chart | ^0.69.0 |
+| adaptive_theme | ^3.6.0 |
 
 ---
 
